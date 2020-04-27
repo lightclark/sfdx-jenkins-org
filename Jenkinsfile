@@ -8,19 +8,9 @@ node {
     def DEPLOYDIR='src'
     def TEST_LEVEL='RunLocalTests'
     def SF_INSTANCE_URL = env.SF_INSTANCE_URL ?: "https://test.salesforce.com"
-	
-	println SF_CONSUMER_KEY
-	println SF_USERNAME
-	println SERVER_KEY_CREDENTIALS_ID
-	println DEPLOYDIR
-	println TEST_LEVEL
-	println SF_INSTANCE_URL
 
 
-	
-	
-	println "123"
-	println env.WORKSPACE
+    def toolbelt = tool 'toolbelt'
 
 
     // -------------------------------------------------------------------------
@@ -37,8 +27,7 @@ node {
     // JWT key credentials.
     // -------------------------------------------------------------------------
 
-	
-withEnv(["HOME=${env.WORKSPACE}"]) {	
+ 	withEnv(["HOME=${env.WORKSPACE}"]) {	
 	
 	    withCredentials([file(credentialsId: SERVER_KEY_CREDENTIALS_ID, variable: 'server_key_file')]) {
 		// -------------------------------------------------------------------------
@@ -46,7 +35,7 @@ withEnv(["HOME=${env.WORKSPACE}"]) {
 		// -------------------------------------------------------------------------
 
 		stage('Authorize to Salesforce') {
-			rc = command "sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${server_key_file} --username ${SF_USERNAME} --setalias UAT"
+			rc = command "${toolbelt}/sfdx force:auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --jwtkeyfile ${server_key_file} --username ${SF_USERNAME} --setalias UAT"
 		    if (rc != 0) {
 			error 'Salesforce org authorization failed.'
 		    }
@@ -58,7 +47,7 @@ withEnv(["HOME=${env.WORKSPACE}"]) {
 		// -------------------------------------------------------------------------
 
 		stage('Deploy and Run Tests') {
-		    rc = command "sfdx force:mdapi:deploy --wait 10 --deploydir ${DEPLOYDIR} --targetusername UAT --testlevel ${TEST_LEVEL}"
+		    rc = command "${toolbelt}/sfdx force:mdapi:deploy --wait 10 --deploydir ${DEPLOYDIR} --targetusername UAT --testlevel ${TEST_LEVEL}"
 		    if (rc != 0) {
 			error 'Salesforce deploy and test run failed.'
 		    }
