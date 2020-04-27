@@ -11,6 +11,13 @@ node {
 
 
     def toolbelt = tool 'toolbelt'
+	
+	printf SF_CONSUMER_KEY
+	printf SF_USERNAME
+	printf SERVER_KEY_CREDENTIALS_ID
+	printf SF_INSTANCE_URL
+	printf DEPLOYDIR
+	printf DEPLOYDIR
 
 
     // -------------------------------------------------------------------------
