@@ -20,7 +20,7 @@ node {
     def toolbelt = tool 'toolbelt'
 	println "123"
 	println toolbelt
-	println ${toolbelt}
+	primtln aa
 	println env.WORKSPACE
 
 
