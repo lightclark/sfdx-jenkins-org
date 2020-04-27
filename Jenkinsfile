@@ -8,9 +8,6 @@ node {
     def DEPLOYDIR='src'
     def TEST_LEVEL='RunLocalTests'
     def SF_INSTANCE_URL = env.SF_INSTANCE_URL ?: "https://test.salesforce.com"
-
-
-    def toolbelt = tool 'toolbelt'
 	
 	printf SF_CONSUMER_KEY
 	printf SF_USERNAME
@@ -18,6 +15,9 @@ node {
 	printf SF_INSTANCE_URL
 	printf DEPLOYDIR
 	printf DEPLOYDIR
+
+
+    def toolbelt = tool 'toolbelt'
 
 
     // -------------------------------------------------------------------------
