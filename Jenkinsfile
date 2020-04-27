@@ -17,10 +17,9 @@ node {
 	println SF_INSTANCE_URL
 
 
-	println %cd%
 	
     def toolbelt = tool 'toolbelt'
-	println %cd%
+	
 	println "123"
 	println toolbelt
 	println env.WORKSPACE
